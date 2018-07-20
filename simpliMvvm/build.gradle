@@ -60,7 +60,7 @@ dependencies {
 task prValidation {
     dependsOn 'checkstyle'
     dependsOn 'pmd'
-    dependsOn 'findbugs'
+    // dependsOn 'findbugs'
     dependsOn 'test'
 }
 
