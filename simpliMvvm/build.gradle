@@ -57,6 +57,13 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 }
 
+task prValidation {
+    dependsOn 'checkstyle'
+    dependsOn 'pmd'
+    dependsOn 'findbugs'
+    dependsOn 'test'
+}
+
 group = "com.trayis"    // Maven Group ID for the artifact
 version = "0.0.3"       // This is the library version used when deploying the artifact
 

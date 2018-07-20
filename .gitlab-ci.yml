@@ -35,4 +35,4 @@ BuildBinary:
 UnitTests:
   stage: test
   script:
-    - ./gradlew checkstyle pmd findbugs test
+    - ./gradlew prValidation
