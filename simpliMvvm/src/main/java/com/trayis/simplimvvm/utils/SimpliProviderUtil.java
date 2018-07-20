@@ -10,7 +10,7 @@ public class SimpliProviderUtil {
 
     private static final SimpliProviderUtil INSTANCE = new SimpliProviderUtil();
 
-    private SimpliMvvmProvider provider;
+    private SimpliMvvmProvider mProvider;
 
     private SimpliProviderUtil() {
     }
@@ -20,14 +20,14 @@ public class SimpliProviderUtil {
     }
 
     public void setProvider(SimpliMvvmProvider provider) {
-        if (this.provider != null) {
+        if (this.mProvider != null) {
             Logging.w(TAG, "provider already set");
             return;
         }
-        this.provider = provider;
+        this.mProvider = provider;
     }
 
     public SimpliMvvmProvider getProvider() {
-        return provider;
+        return mProvider;
     }
 }
