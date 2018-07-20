@@ -6,9 +6,4 @@ public abstract class SimpliViewModel extends ViewModel {
 
     protected final String TAG = getClass().getSimpleName();
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-    }
-
 }

@@ -71,7 +71,7 @@ install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom.project {
-            name "SimpliMVVM"
+            name "SimpliMvvm"
             description = "SimpliMVVM is our effort to create a simple and understandable MVVM Library. Idea here is to create a basic code structure that can be further extend based on the project needs."
             url siteUrl
             inceptionYear "2018"
@@ -123,7 +123,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "android_lib"
-        name = "SimpliMVVM"
+        name = "SimpliMvvm"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

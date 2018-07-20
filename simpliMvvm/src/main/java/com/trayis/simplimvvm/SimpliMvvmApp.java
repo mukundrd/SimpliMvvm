@@ -17,7 +17,7 @@ public abstract class SimpliMvvmApp extends Application {
         SimpliProviderUtil.getInstance().setProvider(getSimpliMvvmProvider());
     }
 
-    private void initLogger() {
+    protected void initLogger() {
         Logging.initLogger();
     }
 
