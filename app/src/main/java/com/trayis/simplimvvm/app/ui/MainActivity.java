@@ -11,12 +11,12 @@ import com.trayis.simplimvvmannotation.SimpliViewComponent;
 public class MainActivity extends SimpliActivity<ActivityMainBinding, MainViewModel> {
 
     @Override
-    protected int getModelVariable() {
+    public int getModelVariable() {
         return BR.viewModel;
     }
 
     @Override
-    protected int getLayoutResourceId() {
+    public int getLayoutResourceId() {
         return R.layout.activity_main;
     }
 

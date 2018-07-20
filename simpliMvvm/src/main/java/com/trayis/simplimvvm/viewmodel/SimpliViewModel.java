@@ -10,4 +10,5 @@ public abstract class SimpliViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
     }
+
 }
