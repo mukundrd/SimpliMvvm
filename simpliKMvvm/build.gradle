@@ -1,15 +1,13 @@
-apply plugin: 'com.android.library'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
-apply from: '../config/quality/quality.gradle'
 
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 17
@@ -18,23 +16,24 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
         disable 'InvalidPackage'
         abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     dataBinding {
@@ -45,34 +44,26 @@ android {
 
 dependencies {
 
-    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportLibrary"
-    implementation "com.android.support:support-annotations:$rootProject.androidSupportLibrary"
+    implementation "com.android.support:appcompat-v7:$androidSupportLibrary"
 
-    implementation "android.arch.lifecycle:extensions:$rootProject.androidArch"
-    implementation "android.arch.lifecycle:viewmodel:$rootProject.androidArch"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     testImplementation "junit:junit:4.12"
 
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
-}
 
-task prValidation {
-    dependsOn 'checkstyle'
-    dependsOn 'pmd'
-    // dependsOn 'findbugs'
-    dependsOn 'test'
 }
 
 group = "com.trayis"    // Maven Group ID for the artifact
-version = "0.0.3"       // This is the library version used when deploying the artifact
+version = "0.0.1"       // This is the library version used when deploying the artifact
 
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom.project {
-            name "SimpliMvvm"
-            description = "SimpliMVVM is our effort to create a simple and understandable MVVM Library. Idea here is to create a basic code structure that can be further extend based on the project needs."
+            name "SimpliKMvvm"
+            description = "SimpliKMvvm is our effort to create a simple and understandable MVVM Library using Kotlin. Idea here is to create a basic code structure that can be further extend based on the project needs."
             url siteUrl
             inceptionYear "2018"
 
@@ -123,7 +114,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "android_lib"
-        name = "SimpliMvvm"
+        name = "SimpliKMvvm"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

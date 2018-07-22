@@ -36,6 +36,11 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
     }
 
     @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.RELEASE_8;
+    }
+
+    @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         StringBuilder packageBuilder = new StringBuilder();
         StringBuilder classBuilder = new StringBuilder();

@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trayis.simplimvvm.utils.Logging;
+import com.trayis.simplimvvm.utils.SimpliProviderUtil;
 import com.trayis.simplimvvm.viewmodel.SimpliViewModel;
+
+import java.util.InvalidPropertiesFormatException;
 
 public abstract class SimpliFragment<B extends ViewDataBinding, V extends SimpliViewModel> extends Fragment implements Simpli {
 
@@ -27,7 +31,15 @@ public abstract class SimpliFragment<B extends ViewDataBinding, V extends Simpli
     }
 
     private V getViewModel() {
-        return null;
+        if (mViewModel == null) {
+            try {
+                //noinspection unchecked
+                mViewModel = (V) SimpliProviderUtil.getInstance().getProvider().getViewModel(this);
+            } catch (InvalidPropertiesFormatException e) {
+                Logging.e(TAG, e.getMessage(), e);
+            }
+        }
+        return mViewModel;
     }
 
     @Override
