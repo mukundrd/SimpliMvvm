@@ -12,7 +12,7 @@ dependencies {
 }
 
 group = 'com.trayis'    // Maven Group ID for the artifact
-version = '0.0.1'       // This is the library version used when deploying the artifact
+version = '0.0.2'       // This is the library version used when deploying the artifact
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -20,8 +20,8 @@ targetCompatibility = JavaVersion.VERSION_1_8
 install {
     repositories.mavenInstaller {
         pom.project {
-            name 'SimpliKMvvvmAnnotation'
-            description = 'SimpliKMvvvmAnnotation is a support library to create a simple and understandable MVVM Library dependencies using Kotlin.'
+            name 'SimpliKMvvmAnnotation'
+            description = 'SimpliKMvvmAnnotation is a support library to create a simple and understandable MVVM Library dependencies using Kotlin.'
             url siteUrl
             inceptionYear '2018'
 
@@ -71,7 +71,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "android_lib"
-        name = "SimpliKMvvvmAnnotation"
+        name = "SimpliKMvvmAnnotation"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
