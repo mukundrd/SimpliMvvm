@@ -1,1 +1,1 @@
-include ':app', ':simpliMvvm', ':simpliMvvmAnnotation', ':simpliKMvvm', ':simpliKMvvmAnnotation'
+include ':app', ':simpliMvvm', ':simpliMvvmAnnotation', ':simpliKMvvm', ':simpliKMvvmAnnotation', ':kotlinApp'

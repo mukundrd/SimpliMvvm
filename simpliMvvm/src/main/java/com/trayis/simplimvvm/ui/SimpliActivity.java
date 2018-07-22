@@ -16,9 +16,9 @@ public abstract class SimpliActivity<B extends ViewDataBinding, V extends Simpli
 
     protected final String TAG = getClass().getSimpleName();
 
-    private B mBinding;
+    protected B mBinding;
 
-    private V mViewModel;
+    protected V mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,19 +27,21 @@ public abstract class SimpliActivity<B extends ViewDataBinding, V extends Simpli
     }
 
     private void doDataBinding() {
-        mBinding = DataBindingUtil.setContentView(this, getLayoutResourceId());
+        B binding = DataBindingUtil.setContentView(this, getLayoutResourceId());
         mViewModel = getViewModel();
-        mBinding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(this);
         int modelVariable = getModelVariable();
         if (modelVariable > 0) {
-            mBinding.setVariable(modelVariable, mViewModel);
+            binding.setVariable(modelVariable, mViewModel);
         }
-        mBinding.executePendingBindings();
+        binding.executePendingBindings();
+        mBinding = binding;
     }
 
     private V getViewModel() {
         if (mViewModel == null) {
             try {
+                //noinspection unchecked
                 mViewModel = (V) SimpliProviderUtil.getInstance().getProvider().getViewModel(this);
             } catch (InvalidPropertiesFormatException e) {
                 Logging.e(TAG, e.getMessage(), e);

@@ -1,4 +1,5 @@
 package com.trayis.simplikmvvmannotation
 
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
 annotation class SimpliViewComponent
