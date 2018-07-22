@@ -28,7 +28,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
-        abortOnError false
+        abortOnError true
     }
 
     compileOptions {
@@ -97,6 +97,7 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt']
     source = android.sourceSets.main.java.srcDirs
 }
 task javadocJar(type: Jar, dependsOn: javadoc) {
