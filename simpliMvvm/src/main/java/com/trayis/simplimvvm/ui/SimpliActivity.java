@@ -27,15 +27,15 @@ public abstract class SimpliActivity<B extends ViewDataBinding, V extends Simpli
     }
 
     private void doDataBinding() {
-        B binding = DataBindingUtil.setContentView(this, getLayoutResourceId());
+        mBinding = DataBindingUtil.setContentView(this, getLayoutResourceId());
         mViewModel = getViewModel();
-        binding.setLifecycleOwner(this);
+        mBinding.setLifecycleOwner(this);
         int modelVariable = getModelVariable();
         if (modelVariable > 0) {
-            binding.setVariable(modelVariable, mViewModel);
+            mBinding.setVariable(modelVariable, mViewModel);
         }
-        binding.executePendingBindings();
-        mBinding = binding;
+        mViewModel.onCreate();
+        mBinding.executePendingBindings();
     }
 
     @SuppressWarnings("unchecked")

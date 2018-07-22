@@ -11,25 +11,31 @@ class MainViewModel() : SimpliViewModel() {
 
     private var mInitialTime: Long = 100
 
-    private var timer: Timer
+    private var timer: Timer? = null
 
-    init {
-        timer = Timer()
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                if (mInitialTime < 0) {
-                    timer.cancel();
-                    return;
+    override fun onCreate() {
+        timer = Timer();
+        timer?.let {
+            it.schedule(object : TimerTask() {
+                override fun run() {
+                    if (mInitialTime < 0) {
+                        it.cancel()
+                        it.purge()
+                        return;
+                    }
+                    Logging.i(TAG, "" + mInitialTime);
+                    textViewData.postValue("" + mInitialTime);
+                    mInitialTime--;
                 }
-                Logging.i(TAG, "" + mInitialTime);
-                textViewData.postValue("" + mInitialTime);
-                mInitialTime--;
-            }
-        }, mInitialTime, 300)
+            }, mInitialTime, 300)
+        }
     }
 
     override fun onCleared() {
-        timer.cancel()
+        timer?.let {
+            it.cancel()
+            it.purge()
+        }
         super.onCleared()
     }
 }

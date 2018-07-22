@@ -56,6 +56,8 @@ public abstract class SimpliFragment<B extends ViewDataBinding, V extends Simpli
         if (modelVariable > 0) {
             mBinding.setVariable(modelVariable, mViewModel);
         }
+        mViewModel.onCreate();
+        mBinding.executePendingBindings();
     }
 
 }

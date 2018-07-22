@@ -31,6 +31,7 @@ abstract class SimpliActivity<B : ViewDataBinding, V : SimpliViewModel> : AppCom
             binding.setVariable(modelVariable, mViewModel)
         }
         binding.executePendingBindings()
+        mViewModel?.onCreate()
         mBinding = binding
     }
 
