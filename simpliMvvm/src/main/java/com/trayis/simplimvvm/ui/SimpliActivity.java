@@ -38,10 +38,10 @@ public abstract class SimpliActivity<B extends ViewDataBinding, V extends Simpli
         mBinding = binding;
     }
 
+    @SuppressWarnings("unchecked")
     private V getViewModel() {
         if (mViewModel == null) {
             try {
-                //noinspection unchecked
                 mViewModel = (V) SimpliProviderUtil.getInstance().getProvider().getViewModel(this);
             } catch (InvalidPropertiesFormatException e) {
                 Logging.e(TAG, e.getMessage(), e);
