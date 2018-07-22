@@ -13,9 +13,10 @@ public class MainViewModel extends SimpliViewModel {
     private int mInitialTime;
 
     public final MutableLiveData<String> textViewData = new MutableLiveData<>();
-    private final Timer timer;
+    private Timer timer;
 
-    public MainViewModel() {
+    @Override
+    public void onCreate() {
         mInitialTime = 100;
 
         Logging.i(TAG, "" + mInitialTime);

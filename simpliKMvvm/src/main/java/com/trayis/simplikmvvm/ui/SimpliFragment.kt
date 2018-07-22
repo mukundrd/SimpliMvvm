@@ -51,6 +51,8 @@ abstract class SimpliFragment<B : ViewDataBinding, V : SimpliViewModel> : Fragme
         if (modelVariable > 0) {
             mBinding?.setVariable(modelVariable, mViewModel)
         }
+        mViewModel?.onCreate()
+        mBinding?.executePendingBindings()
     }
 
 }

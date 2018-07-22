@@ -6,4 +6,6 @@ public abstract class SimpliViewModel extends ViewModel {
 
     protected final String TAG = getClass().getSimpleName();
 
+    public abstract void onCreate();
+
 }
