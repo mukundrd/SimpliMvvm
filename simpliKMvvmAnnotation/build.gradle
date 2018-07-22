@@ -1,10 +1,80 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
+def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.51"
 }
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
+group = 'com.trayis'    // Maven Group ID for the artifact
+version = '0.0.1'       // This is the library version used when deploying the artifact
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'SimpliKMvvvmAnnotation'
+            description = 'SimpliKMvvvmAnnotation is a support library to create a simple and understandable MVVM Library dependencies using Kotlin.'
+            url siteUrl
+            inceptionYear '2018'
+
+            packaging 'aar'
+
+            // Set your license
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+            developers {
+                developer {
+                    id 'muks.dev'
+                    name 'Mukund Desai'
+                    email 'muks.dev@trayis.com'
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = System.getenv("bintray_user")
+    key = System.getenv("bintray_apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "android_lib"
+        name = "SimpliKMvvvmAnnotation"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
