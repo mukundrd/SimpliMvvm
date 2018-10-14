@@ -1,6 +1,6 @@
 package com.trayis.simplimvvm.kotlinapp.ui.model
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.trayis.simplikmvvm.utils.Logging
 import com.trayis.simplikmvvm.viewmodel.SimpliViewModel
 import java.util.*

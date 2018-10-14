@@ -17,5 +17,5 @@ abstract class SimpliMvvmApp : Application() {
         Logging.initLogging()
     }
 
-    abstract fun getSimpliMvvmProvider(): SimpliMvvmProvider<*>
+    abstract fun getSimpliMvvmProvider(): SimpliMvvmProvider
 }

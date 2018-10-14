@@ -33,7 +33,7 @@ class Logging private constructor() {
         }
 
         fun d(tag: String, msg: String?, e: Throwable?) {
-            logger?.log(Log.DEBUG, tag, if (msg == null) "" else msg, e)
+            logger?.log(Log.DEBUG, tag, msg ?: "", e)
         }
 
         fun e(tag: String, msg: String) {
@@ -41,7 +41,7 @@ class Logging private constructor() {
         }
 
         fun e(tag: String, msg: String?, e: Throwable?) {
-            logger?.log(Log.ERROR, tag, if (msg == null) "" else msg, e)
+            logger?.log(Log.ERROR, tag, msg ?: "", e)
         }
 
         fun i(tag: String, msg: String) {
@@ -49,7 +49,7 @@ class Logging private constructor() {
         }
 
         fun i(tag: String, msg: String?, e: Throwable?) {
-            logger?.log(Log.INFO, tag, if (msg == null) "" else msg, e)
+            logger?.log(Log.INFO, tag, msg ?: "", e)
         }
 
         fun v(tag: String, msg: String) {
@@ -57,7 +57,7 @@ class Logging private constructor() {
         }
 
         fun v(tag: String, msg: String?, e: Throwable?) {
-            logger?.log(Log.VERBOSE, tag, if (msg == null) "" else msg, e)
+            logger?.log(Log.VERBOSE, tag, msg ?: "", e)
         }
 
         fun w(tag: String, msg: String) {
@@ -65,7 +65,7 @@ class Logging private constructor() {
         }
 
         fun w(tag: String, msg: String?, e: Throwable?) {
-            logger?.log(Log.WARN, tag, if (msg == null) "" else msg, e)
+            logger?.log(Log.WARN, tag, msg ?: "", e)
         }
     }
 
