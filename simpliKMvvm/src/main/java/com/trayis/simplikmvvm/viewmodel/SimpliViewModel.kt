@@ -1,6 +1,6 @@
 package com.trayis.simplikmvvm.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 abstract class SimpliViewModel : ViewModel() {
 

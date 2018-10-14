@@ -1,6 +1,6 @@
 package com.trayis.simplimvvm.app.ui.model;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.trayis.simplimvvm.utils.Logging;
 import com.trayis.simplimvvm.viewmodel.SimpliViewModel;

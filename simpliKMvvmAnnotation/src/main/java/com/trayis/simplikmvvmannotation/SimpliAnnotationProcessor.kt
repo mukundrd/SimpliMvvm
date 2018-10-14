@@ -36,10 +36,10 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
 
         packageBuilder.append("package $packageName;")
 
-        packageBuilder.append("\n\nimport android.arch.lifecycle.ViewModelProvider;")
-        packageBuilder.append("\nimport android.arch.lifecycle.ViewModelProviders;")
-        packageBuilder.append("\nimport android.support.v4.app.Fragment;")
-        packageBuilder.append("\nimport android.support.v4.app.FragmentActivity;")
+        packageBuilder.append("\n\nimport androidx.lifecycle.ViewModelProvider;")
+        packageBuilder.append("\nimport androidx.lifecycle.ViewModelProviders;")
+        packageBuilder.append("\nimport androidx.fragment.app.Fragment;")
+        packageBuilder.append("\nimport androidx.fragment.app.FragmentActivity;")
 
         packageBuilder.append("\n\nimport com.trayis.simplikmvvm.ui.Simpli;")
         packageBuilder.append("\nimport com.trayis.simplikmvvm.utils.SimpliMvvmProvider;")
