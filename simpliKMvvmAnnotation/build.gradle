@@ -8,11 +8,11 @@ def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git reposito
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }
 
 group = 'com.trayis'    // Maven Group ID for the artifact
-version = '0.0.2'       // This is the library version used when deploying the artifact
+version = '1.0.0'       // This is the library version used when deploying the artifact
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8

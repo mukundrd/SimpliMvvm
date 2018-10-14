@@ -2,12 +2,12 @@ package com.trayis.simplikmvvm.ui
 
 import androidx.annotation.LayoutRes
 
-interface Simpli {
+interface SimpliBase {
+
+    fun bindViewModels()
 
     @get:LayoutRes
 
     val layoutResourceId: Int
-
-    val modelVariable: Int
 
 }
