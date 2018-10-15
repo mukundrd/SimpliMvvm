@@ -1,7 +1,8 @@
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-kapt'
 
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
@@ -96,14 +97,17 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
+
 task javadoc(type: Javadoc) {
     excludes = ['**/*.kt']
     source = android.sourceSets.main.java.srcDirs
 }
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
