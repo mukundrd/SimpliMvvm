@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-apply from: '../config/quality/quality.gradle'
-
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
@@ -53,15 +51,8 @@ dependencies {
 
     testImplementation "junit:junit:4.12"
 
-    androidTestImplementation "androidx.test:runner:1.1.0-beta01"
+    androidTestImplementation "androidx.test:runner:1.0.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0-beta02"
-}
-
-task prValidation {
-    dependsOn 'checkstyle'
-    dependsOn 'pmd'
-    // dependsOn 'findbugs'
-    dependsOn 'test'
 }
 
 group = "com.trayis"    // Maven Group ID for the artifact
@@ -105,13 +96,23 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
+
 task javadoc(type: Javadoc) {
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompile.classpath
+        }
+    }
     source = android.sourceSets.main.java.srcDirs
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
 }
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
