@@ -1,14 +1,21 @@
 package com.trayis.simplimvvm.app;
 
-import com.trayis.simplimvvm.SimpliMvvmApp;
+import android.app.Application;
+
 import com.trayis.simplimvvm.utils.SimpliMvvmProvider;
+import com.trayis.simplimvvm.utils.SimpliProviderUtil;
+import com.trayis.simplimvvm.utils.SimpliResource;
 import com.trayis.simplimvvmannotation.generated.SimpliMvvmProviderImpl;
 
-public class SampleApp extends SimpliMvvmApp {
+public class SampleApp extends Application implements SimpliResource {
 
     @Override
-    protected SimpliMvvmProvider getSimpliMvvmProvider() {
-        return SimpliMvvmProviderImpl.getInstance();
+    public void onCreate() {
+        super.onCreate();
+
+        SimpliMvvmProvider instance = SimpliMvvmProviderImpl.getInstance();
+        instance.getFactory().setResources(this);
+        SimpliProviderUtil.getInstance().setProvider(instance);
     }
 
 }

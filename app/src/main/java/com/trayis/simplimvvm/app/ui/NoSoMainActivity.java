@@ -1,30 +1,22 @@
 package com.trayis.simplimvvm.app.ui;
 
-import android.os.Bundle;
-
 import com.trayis.simplimvvm.app.R;
 import com.trayis.simplimvvm.app.databinding.ActivityMainBinding;
-import com.trayis.simplimvvm.app.ui.model.MainViewModel;
+import com.trayis.simplimvvm.app.databinding.ActivityNotSoMainBinding;
+import com.trayis.simplimvvm.app.ui.model.NotSoMainViewModel;
 import com.trayis.simplimvvm.ui.SimpliActivity;
 import com.trayis.simplimvvmannotation.SimpliInject;
 import com.trayis.simplimvvmannotation.SimpliViewComponent;
 
-import androidx.annotation.Nullable;
-
 @SimpliViewComponent
-public class MainActivity extends SimpliActivity<ActivityMainBinding> {
+public class NoSoMainActivity extends SimpliActivity<ActivityNotSoMainBinding> {
 
     @SimpliInject
-    MainViewModel viewModel;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    NotSoMainViewModel viewModel;
 
     @Override
     public int getLayoutResourceId() {
-        return R.layout.activity_main;
+        return R.layout.activity_not_so_main;
     }
 
     @Override

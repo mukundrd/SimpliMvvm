@@ -2,22 +2,20 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-apply from: '../config/quality/quality.gradle'
-
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -45,27 +43,20 @@ android {
 
 dependencies {
 
-    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportLibrary"
-    implementation "com.android.support:support-annotations:$rootProject.androidSupportLibrary"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.annotation:annotation:1.0.0'
 
-    implementation "android.arch.lifecycle:extensions:$rootProject.androidArch"
-    implementation "android.arch.lifecycle:viewmodel:$rootProject.androidArch"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
 
     testImplementation "junit:junit:4.12"
 
-    androidTestImplementation "com.android.support.test:runner:1.0.2"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
-}
-
-task prValidation {
-    dependsOn 'checkstyle'
-    dependsOn 'pmd'
-    // dependsOn 'findbugs'
-    dependsOn 'test'
+    androidTestImplementation "androidx.test:runner:1.1.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0"
 }
 
 group = "com.trayis"    // Maven Group ID for the artifact
-version = "0.0.4"       // This is the library version used when deploying the artifact
+version = "1.0.1"       // This is the library version used when deploying the artifact
 
 install {
     repositories.mavenInstaller {
@@ -105,13 +96,23 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
+
 task javadoc(type: Javadoc) {
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompile.classpath
+        }
+    }
     source = android.sourceSets.main.java.srcDirs
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
 }
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar

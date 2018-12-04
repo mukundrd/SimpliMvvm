@@ -1,5 +1,6 @@
 package com.trayis.simplimvvm.app.ui.model;
 
+import com.trayis.simplimvvm.app.SampleApp;
 import com.trayis.simplimvvm.utils.Logging;
 import com.trayis.simplimvvm.viewmodel.SimpliViewModel;
 
@@ -8,9 +9,15 @@ import java.util.TimerTask;
 
 import androidx.lifecycle.MutableLiveData;
 
-public class MainViewModel extends SimpliViewModel {
+public class NotSoMainViewModel extends SimpliViewModel {
+
+    // private final SampleApp app;
 
     private int mInitialTime;
+
+    public NotSoMainViewModel(SampleApp app) {
+        // this.app = app;
+    }
 
     public final MutableLiveData<String> textViewData = new MutableLiveData<>();
     private Timer timer;

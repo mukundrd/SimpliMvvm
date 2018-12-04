@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.trayis.simplimvvm.app.ui.model.MainViewModel" />
+            type="com.trayis.simplimvvm.app.ui.model.NotSoMainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
