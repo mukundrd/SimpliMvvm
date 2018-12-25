@@ -5,11 +5,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.trayis.simplikmvvm.utils.Logging
 import com.trayis.simplikmvvm.viewmodel.SimpliViewModel
-import com.trayis.simplimvvm.kotlinapp.SampleApp
 import com.trayis.simplimvvm.kotlinapp.common.ConnectivityResource
 import java.util.*
 
-class MainViewModel(val conn: ConnectivityResource?, val app: SampleApp) : SimpliViewModel() {
+class MainViewModel(val conn: ConnectivityResource?) : SimpliViewModel() {
 
     val textViewData: MutableLiveData<String> = MutableLiveData();
 

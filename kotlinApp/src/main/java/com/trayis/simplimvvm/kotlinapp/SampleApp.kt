@@ -3,10 +3,9 @@ package com.trayis.simplimvvm.kotlinapp
 import android.app.Application
 import android.content.Context
 import com.trayis.simplikmvvm.utils.SimpliProviderUtil
-import com.trayis.simplikmvvm.utils.SimpliResource
 import com.trayis.simplikmvvmannotation.generated.SimpliMvvmProviderImpl
 
-class SampleApp : Application(), SimpliResource {
+class SampleApp : Application() {
 
     companion object {
         fun getInstance(context: Context) = context.applicationContext as SampleApp

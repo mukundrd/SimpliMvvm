@@ -98,6 +98,14 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
         factoryClassBuilder.append("\n\n\t@NonNull\n\t@Override\n\t@SuppressWarnings(\"unchecked\")\n\tpublic <T extends ViewModel> T create(Class<T> modelClass) {");
         factoryClassBuilder.append("\n\t\tswitch (modelClass.getName()) {");
 
+        String resourceProvider = null;
+        for (Element classElement : roundEnv.getElementsAnnotatedWith(SimpliResourcesProvider.class)) {
+            if (!(classElement instanceof TypeElement)) {
+                return true;
+            }
+            resourceProvider = classElement.toString();
+        }
+
         HashMap<String, Map<String, List<VariableElement>>> providersMap = new HashMap<>();
 
         for (Element classElement : roundEnv.getElementsAnnotatedWith(SimpliViewComponent.class)) {
@@ -133,7 +141,7 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
         classBuilder.append("\n\t\tmProviders = new SimpliMvvmProvider[").append(entries.size()).append("];");
         int i = 0;
         for (Map.Entry<String, Map<String, List<VariableElement>>> entry : entries) {
-            createSimpliMvvmProvider(entry);
+            createSimpliMvvmProvider(entry, resourceProvider);
             classBuilder.append("\n\t\tmProviders[").append(i).append("] = ").append(entry.getKey()).append(".PackageMvvmProvider.getInstance(factory);");
             classBuilder.append("\n\t\tmProviders[").append(i++).append("].setFactory(factory);");
         }
@@ -179,7 +187,7 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void createSimpliMvvmProvider(Map.Entry<String, Map<String, List<VariableElement>>> entry) {
+    private void createSimpliMvvmProvider(Map.Entry<String, Map<String, List<VariableElement>>> entry, String resourceProvider) {
         StringBuilder packageBuilder = new StringBuilder();
         StringBuilder classBuilder = new StringBuilder();
         StringBuilder methodsBuilder = new StringBuilder();
@@ -269,12 +277,16 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
                                         methods.add(resourceName);
                                         factoryPackageBuilder.append("\nimport ").append(resourceTypeMirror).append(";");
                                         factoryMethodsBuilder.append("\n\n\tprivate ").append(resourceName).append(" prepare").append(resourceName).append("(Context context) {");
-                                        factoryMethodsBuilder.append("\n\t\t").append(resourceName).append(" resource = getResource(").append(resourceName).append(".class);");
-                                        factoryMethodsBuilder.append("\n\t\tif (resource == null) {");
-                                        factoryMethodsBuilder.append("\n\t\t\tresource = ").append(resourceName).append(".getInstance(context);");
-                                        factoryMethodsBuilder.append("\n\t\t\tputResource(resource);");
-                                        factoryMethodsBuilder.append("\n\t\t}");
-                                        factoryMethodsBuilder.append("\n\t\treturn resource;");
+                                        if (resourceProvider != null) {
+                                            factoryMethodsBuilder.append("\n\t\t return ").append(resourceProvider).append(".getInstance().prepare").append(resourceName).append("(context);");
+                                        } else {
+                                            factoryMethodsBuilder.append("\n\t\t").append(resourceName).append(" resource = getResource(").append(resourceName).append(".class);");
+                                            factoryMethodsBuilder.append("\n\t\tif (resource == null) {");
+                                            factoryMethodsBuilder.append("\n\t\t\tresource = ").append(resourceName).append(".getInstance(context);");
+                                            factoryMethodsBuilder.append("\n\t\t\tputResource(resource);");
+                                            factoryMethodsBuilder.append("\n\t\t}");
+                                            factoryMethodsBuilder.append("\n\t\treturn resource;");
+                                        }
                                         factoryMethodsBuilder.append("\n\t}");
                                     }
                                 }

@@ -97,9 +97,21 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         factoryClassBuilder.append("\n\t\t@Suppress(\"UNCHECKED_CAST\")")
         factoryClassBuilder.append("\n\t\twhen (modelClass.getName()) {")
 
+        var resourceProvider: String? = null
+        try {
+            roundEnv.getElementsAnnotatedWith(SimpliResourcesProvider::class.java)?.first()?.let {
+                if (it !is TypeElement) {
+                    return true
+                }
+                resourceProvider = it.toString()
+            }
+        } catch (e: NoSuchElementException) {
+            // Do nothing
+        }
+
         val providersMap = HashMap<String, MutableMap<String, List<VariableElement>>>()
 
-        (roundEnv.getElementsAnnotatedWith(SimpliViewComponent::class.java)).forEach { classElement ->
+        roundEnv.getElementsAnnotatedWith(SimpliViewComponent::class.java).forEach { classElement ->
 
             if (classElement !is TypeElement) {
                 return true
@@ -128,7 +140,7 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         classBuilder.append("\n\t\tmProviders = arrayOfNulls(${entries.size})")
         var i = 0
         for (entry in entries) {
-            createSimpliMvvmProvider(entry)
+            createSimpliMvvmProvider(entry, resourceProvider)
             classBuilder.append("\n\t\tmProviders[").append(i).append("] = ").append(entry.key).append(".PackageMvvmProvider.getInstance(factory!!)")
         }
         classBuilder.append("\n\t}")
@@ -172,7 +184,7 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
 
     }
 
-    private fun createSimpliMvvmProvider(entry: MutableMap.MutableEntry<String, MutableMap<String, List<VariableElement>>>) {
+    private fun createSimpliMvvmProvider(entry: MutableMap.MutableEntry<String, MutableMap<String, List<VariableElement>>>, resourceProvider: String?) {
         val packageBuilder = StringBuilder()
         val classBuilder = StringBuilder()
         val methodsBuilder = StringBuilder()
@@ -268,11 +280,15 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
                                         methods.add(resourceName)
                                         factoryPackageBuilder.append("\nimport ").append(resourceTypeMirror)
                                         factoryMethodsBuilder.append("\n\n\tprivate fun prepare").append(resourceName).append("(context: Context): ${resourceName} {")
-                                        factoryMethodsBuilder.append("\n\t\treturn getResource(${resourceName}::class.java)?.let { it as ${resourceName} }?: run {")
-                                        factoryMethodsBuilder.append("\n\t\t\tval resource = ").append(resourceName).append(".getInstance(context)")
-                                        factoryMethodsBuilder.append("\n\t\t\tputResource(resource)")
-                                        factoryMethodsBuilder.append("\n\t\t\treturn resource")
-                                        factoryMethodsBuilder.append("\n\t\t}")
+                                        resourceProvider?.let {
+                                            factoryMethodsBuilder.append("\n\t\t return ${resourceProvider}.getInstance().prepare${resourceName}(context);")
+                                        } ?: kotlin.run {
+                                            factoryMethodsBuilder.append("\n\t\treturn getResource(${resourceName}::class.java)?.let { it as ${resourceName} }?: run {")
+                                            factoryMethodsBuilder.append("\n\t\t\tval resource = ").append(resourceName).append(".getInstance(context)")
+                                            factoryMethodsBuilder.append("\n\t\t\tputResource(resource)")
+                                            factoryMethodsBuilder.append("\n\t\t\treturn resource")
+                                            factoryMethodsBuilder.append("\n\t\t}")
+                                        }
                                         factoryMethodsBuilder.append("\n\t}")
                                     }
                                 }
