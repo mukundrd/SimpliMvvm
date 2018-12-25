@@ -17,6 +17,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import static com.trayis.simplimvvm.ui.SimpliBase.ViewModelProviderFlag.SELF;
+
 public abstract class SimpliFragment<B extends ViewDataBinding> extends Fragment implements SimpliBase {
 
     protected final String TAG = getClass().getSimpleName();
@@ -24,6 +26,16 @@ public abstract class SimpliFragment<B extends ViewDataBinding> extends Fragment
     private SimpliViewModel[] mViewModel;
 
     protected B mBinding;
+
+    private int flag = SELF;
+
+    public int getViewModelProviderFlag() {
+        return flag;
+    }
+
+    protected void setViewModelProviderFlag(int flag) {
+        this.flag = flag;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +48,7 @@ public abstract class SimpliFragment<B extends ViewDataBinding> extends Fragment
     private SimpliViewModel[] getViewModel() {
         if (mViewModel == null) {
             try {
-                mViewModel = SimpliProviderUtil.getInstance().getProvider().getViewModels(this);
+                mViewModel = SimpliProviderUtil.getProvider().getViewModels(this);
             } catch (InvalidPropertiesFormatException e) {
                 Logging.e(TAG, e.getMessage(), e);
             }

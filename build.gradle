@@ -1,20 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-ext {
-    androidSupportLibrary = "28.0.0"
-    kotlinVersion = "1.2.71"
-    androidArch = "1.1.1"
-}
-
 buildscript {
-    ext.kotlinVersion = "1.2.71"
+    ext {
+        minSdk = "22"
+        targetSdk = "28"
+        compileVersion = "28"
+        buildVersion = "28.0.3"
+
+        androidSupportLibrary = "28.0.0"
+        kotlinVersion = "1.3.11"
+        androidArch = "1.1.1"
+
+        userId = "muks.dev"
+        userEmail = "muks.dev@trayis.com"
+        userName = "Mukund Desai"
+        userGroup = "com.trayis"
+    }
+
     repositories {
         google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'

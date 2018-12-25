@@ -10,7 +10,7 @@ abstract class SimpliMvvmApp : Application() {
     override fun onCreate() {
         super.onCreate()
         initLogging()
-        SimpliProviderUtil.instance.provider = getSimpliMvvmProvider()
+        SimpliProviderUtil.setProvider(getSimpliMvvmProvider())
     }
 
     protected open fun initLogging() {

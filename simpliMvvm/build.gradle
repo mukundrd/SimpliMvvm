@@ -5,15 +5,16 @@ apply plugin: 'com.jfrog.bintray'
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
+group = userGroup    // Maven Group ID for the artifact
+version = "2.0.0"    // This is the library version used when deploying the artifact
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 22
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,20 +44,17 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.annotation:annotation:1.0.1'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
 
     testImplementation "junit:junit:4.12"
 
-    androidTestImplementation "androidx.test:runner:1.0.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0-beta02"
+    androidTestImplementation "androidx.test:runner:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
 }
-
-group = "com.trayis"    // Maven Group ID for the artifact
-version = "1.0.1"       // This is the library version used when deploying the artifact
 
 install {
     repositories.mavenInstaller {
@@ -78,9 +76,9 @@ install {
             }
             developers {
                 developer {
-                    id "muks.dev"
-                    name "Mukund Desai"
-                    email "muks.dev@trayis.com"
+                    id userId
+                    name userName
+                    email userEmail
                 }
             }
             scm {

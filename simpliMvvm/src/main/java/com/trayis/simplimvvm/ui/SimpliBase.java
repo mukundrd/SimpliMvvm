@@ -9,4 +9,12 @@ public interface SimpliBase {
 
     void setViewModelsToView();
 
+    int getViewModelProviderFlag();
+
+    @interface ViewModelProviderFlag {
+        int SELF = 0;
+        int PARENT = 1;
+        int PARENT_FRAGMENT = 3;
+    }
+
 }

@@ -4,12 +4,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.trayis.simplikmvvm.ui.SimpliBase.Companion.SELF
+import com.trayis.simplikmvvm.utils.Logging
 import com.trayis.simplikmvvm.utils.SimpliProviderUtil
 import com.trayis.simplikmvvm.viewmodel.SimpliViewModel
+import java.util.*
 
 abstract class SimpliActivity<B : ViewDataBinding> : AppCompatActivity(), SimpliBase {
 
     protected val TAG = javaClass.simpleName
+
+    private var flag = SELF
+
+    override fun setViewModelProviderFlag(flag: Int) {
+        this.flag = flag
+    }
+
+    override fun getViewModelProviderFlag() = flag
 
     protected var mBinding: B? = null
 
@@ -18,13 +29,25 @@ abstract class SimpliActivity<B : ViewDataBinding> : AppCompatActivity(), Simpli
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: B = DataBindingUtil.setContentView(this, layoutResourceId)
-        mViewModels = SimpliProviderUtil.instance.provider?.getViewModels(this)
+        mBinding = DataBindingUtil.setContentView(this, layoutResourceId)
+        mViewModels = getViewModels()
         bindViewModels()
-        binding.setLifecycleOwner(this)
-        binding.executePendingBindings()
+        mBinding?.setLifecycleOwner(this)
         mViewModels?.forEach { it?.onCreate() }
-        mBinding = binding
+        mBinding?.executePendingBindings()
+    }
+
+    private fun getViewModels(): Array<SimpliViewModel?>? {
+        var viewModels: Array<SimpliViewModel?>? = null
+        if (viewModels == null) {
+            try {
+                viewModels = SimpliProviderUtil.getProvider()?.getViewModels(this)
+            } catch (e: InvalidPropertiesFormatException) {
+                Logging.e(TAG, e.message, e)
+            }
+
+        }
+        return viewModels
     }
 
 }
