@@ -17,7 +17,7 @@ public class SampleResourceProvider {
 
     public ConnectivityResource prepareConnectivityResource(Context context) {
         if (connResource == null) {
-            connResource = ConnectivityResource.getInstance(context);
+            connResource = new ConnectivityResource(context);
         }
         return connResource;
     }
