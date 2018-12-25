@@ -261,10 +261,6 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
                                     String resourceName = resourceTypeMirror.toString();
                                     resourceName = resourceName.substring(resourceName.lastIndexOf(".") + 1);
 
-                                    if (!hasGotGetInstancemethod(resourceElement)) {
-                                        throw new IllegalStateException(String.format("The resource %1$s has not got method 'public static %1$s getInstance(Context)' implemented.", resourceName));
-                                    }
-
                                     if (!includedInFactoryClassBuilder) {
                                         if (comma) {
                                             factoryClassBuilder.append(", ");
@@ -318,21 +314,5 @@ public class SimpliAnnotationProcessor extends AbstractProcessor {
             e.printStackTrace();
         }
     }
-
-    private boolean hasGotGetInstancemethod(TypeElement resourceElement) {
-        for (Element resourceProperty : resourceElement.getEnclosedElements()) {
-            if (METHOD == resourceProperty.getKind() && "getInstance".equals(resourceProperty.getSimpleName().toString())) {
-                Set<Modifier> modifiers = resourceProperty.getModifiers();
-                if (modifiers.contains(Modifier.PUBLIC) && modifiers.contains(Modifier.STATIC)) {
-                    for (Element param : resourceProperty.getEnclosedElements()) {
-                        System.out.println(param.getSimpleName() + " : " + param.getKind());
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
 
 }

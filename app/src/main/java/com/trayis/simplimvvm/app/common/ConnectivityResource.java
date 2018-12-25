@@ -12,12 +12,8 @@ public class ConnectivityResource implements SimpliResource {
 
     private final Context context;
 
-    private ConnectivityResource(Context context) {
+    public ConnectivityResource(Context context) {
         this.context = context;
-    }
-
-    public static ConnectivityResource getInstance(Context context) {
-        return new ConnectivityResource(context.getApplicationContext());
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

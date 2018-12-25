@@ -6,7 +6,7 @@ def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
 group = userGroup    // Maven Group ID for the artifact
-version = "2.0.0"    // This is the library version used when deploying the artifact
+version = "2.0.1"    // This is the library version used when deploying the artifact
 
 allprojects {
     sourceCompatibility = JavaVersion.VERSION_1_8
