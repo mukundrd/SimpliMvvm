@@ -7,14 +7,15 @@ apply plugin: 'kotlin-kapt'
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
+group = userGroup    // Maven Group ID for the artifact
+version = "2.0.0"    // This is the library version used when deploying the artifact
+
 android {
     compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 22
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -59,9 +60,6 @@ dependencies {
 
 }
 
-group = "com.trayis"    // Maven Group ID for the artifact
-version = "1.0.0"       // This is the library version used when deploying the artifact
-
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -82,9 +80,9 @@ install {
             }
             developers {
                 developer {
-                    id "muks.dev"
-                    name "Mukund Desai"
-                    email "muks.dev@trayis.com"
+                    id userId
+                    name userName
+                    email userEmail
                 }
             }
             scm {

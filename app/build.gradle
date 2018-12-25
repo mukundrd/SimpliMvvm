@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.trayis.simplimvvm.app"
-        minSdkVersion 17
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -41,9 +41,7 @@ task bintray() {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.annotation:annotation:1.0.0'
-
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
+    implementation 'androidx.annotation:annotation:1.0.1'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
@@ -54,7 +52,7 @@ dependencies {
 
     testImplementation "junit:junit:4.12"
 
-    androidTestImplementation "androidx.test:runner:1.1.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0"
+    androidTestImplementation "androidx.test:runner:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
     testAnnotationProcessor project(":simpliMvvmAnnotation")
 }

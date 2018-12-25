@@ -6,13 +6,12 @@ apply plugin: 'com.jfrog.bintray'
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-}
+group = userGroup    // Maven Group ID for the artifact
+version = "2.0.0"    // This is the library version used when deploying the artifact
 
-group = 'com.trayis'    // Maven Group ID for the artifact
-version = '1.0.0'       // This is the library version used when deploying the artifact
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -36,9 +35,9 @@ install {
             }
             developers {
                 developer {
-                    id 'muks.dev'
-                    name 'Mukund Desai'
-                    email 'muks.dev@trayis.com'
+                    id userId
+                    name userName
+                    email userEmail
                 }
             }
             scm {
