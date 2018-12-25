@@ -51,8 +51,9 @@ dependencies {
     annotationProcessor project(":simpliMvvmAnnotation")
 
     testImplementation "junit:junit:4.12"
+    testAnnotationProcessor project(":simpliMvvmAnnotation")
 
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    testAnnotationProcessor project(":simpliMvvmAnnotation")
+
 }
