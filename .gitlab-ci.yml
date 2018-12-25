@@ -31,7 +31,7 @@ BuildBinary:
   only:
     - develop
   script:
-    - ./gradlew assemble
+    - ./gradlew assemble -x test
   artifacts:
     paths:
     - app/build/outputs/
