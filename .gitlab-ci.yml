@@ -21,17 +21,17 @@ stages:
   - build
   - test
 
+UnitTests:
+  stage: test
+  script:
+    - ./gradlew test
+
 BuildBinary:
   stage: build
   only:
     - develop
   script:
-    - ./gradlew assemble
+    - ./gradlew assemble -x test
   artifacts:
     paths:
     - app/build/outputs/
-
-UnitTests:
-  stage: test
-  script:
-    - ./gradlew test
