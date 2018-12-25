@@ -1,13 +1,20 @@
 package com.trayis.simplimvvm.kotlinapp
 
-import com.trayis.simplikmvvm.SimpliMvvmApp
-import com.trayis.simplikmvvm.utils.SimpliMvvmProvider
+import android.app.Application
+import android.content.Context
+import com.trayis.simplikmvvm.utils.SimpliProviderUtil
+import com.trayis.simplikmvvm.utils.SimpliResource
 import com.trayis.simplikmvvmannotation.generated.SimpliMvvmProviderImpl
 
-class SampleApp : SimpliMvvmApp() {
+class SampleApp : Application(), SimpliResource {
 
-    override fun getSimpliMvvmProvider(): SimpliMvvmProvider {
-        return SimpliMvvmProviderImpl.instance
+    companion object {
+        fun getInstance(context: Context) = context.applicationContext as SampleApp
     }
 
+    override fun onCreate() {
+        super.onCreate()
+
+        SimpliProviderUtil.setProvider(SimpliMvvmProviderImpl(this))
+    }
 }

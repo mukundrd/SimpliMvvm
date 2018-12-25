@@ -56,7 +56,7 @@ public abstract class SimpliActivity<B extends ViewDataBinding> extends AppCompa
     private SimpliViewModel[] getViewModels() {
         if (mViewModels == null) {
             try {
-                mViewModels = SimpliProviderUtil.getInstance().getProvider().getViewModels(this);
+                mViewModels = SimpliProviderUtil.getProvider().getViewModels(this);
             } catch (InvalidPropertiesFormatException e) {
                 Logging.e(TAG, e.getMessage(), e);
             }

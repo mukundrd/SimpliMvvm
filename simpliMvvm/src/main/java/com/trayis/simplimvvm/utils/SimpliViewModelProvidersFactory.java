@@ -1,5 +1,7 @@
 package com.trayis.simplimvvm.utils;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,12 +11,10 @@ public abstract class SimpliViewModelProvidersFactory implements ViewModelProvid
 
     private Map<Class<? extends SimpliResource>, SimpliResource> resourcesMap = new HashMap<>();
 
-    public void setResources(SimpliResource... resources) {
-        if (resources != null) {
-            for (SimpliResource resource : resources) {
-                resourcesMap.put(resource.getClass(), resource);
-            }
-        }
+    protected Context context;
+
+    protected void putResource(SimpliResource resource) {
+        resourcesMap.put(resource.getClass(), resource);
     }
 
     @SuppressWarnings("unchecked")

@@ -15,19 +15,15 @@ public class SimpliProviderUtil {
     private SimpliProviderUtil() {
     }
 
-    public static SimpliProviderUtil getInstance() {
-        return INSTANCE;
-    }
-
-    public void setProvider(SimpliMvvmProvider provider) {
-        if (this.mProvider != null) {
+    public static void setProvider(SimpliMvvmProvider provider) {
+        if (INSTANCE.mProvider != null) {
             Logging.w(TAG, "provider already set");
             return;
         }
-        this.mProvider = provider;
+        INSTANCE.mProvider = provider;
     }
 
-    public SimpliMvvmProvider getProvider() {
-        return mProvider;
+    public static SimpliMvvmProvider getProvider() {
+        return INSTANCE.mProvider;
     }
 }

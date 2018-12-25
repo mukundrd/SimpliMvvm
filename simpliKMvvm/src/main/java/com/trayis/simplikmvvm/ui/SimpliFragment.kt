@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.trayis.simplikmvvm.ui.SimpliBase.Companion.SELF
 import com.trayis.simplikmvvm.utils.SimpliProviderUtil
 import com.trayis.simplikmvvm.viewmodel.SimpliViewModel
 
-abstract class SimpliFragment<B : ViewDataBinding> : Fragment(), SimpliBase {
+abstract class SimpliFragment<B : ViewDataBinding>() : Fragment(), SimpliBase {
 
     protected val TAG = javaClass.simpleName
 
@@ -18,9 +19,17 @@ abstract class SimpliFragment<B : ViewDataBinding> : Fragment(), SimpliBase {
 
     protected var mBinding: B? = null
 
+    private var flag = SELF
+
+    override fun setViewModelProviderFlag(flag: Int) {
+        this.flag = flag
+    }
+
+    override fun getViewModelProviderFlag() = flag
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModels = SimpliProviderUtil.instance.provider?.getViewModels(this)
+        mViewModels = SimpliProviderUtil.getProvider()?.getViewModels(this)
         setHasOptionsMenu(false)
     }
 

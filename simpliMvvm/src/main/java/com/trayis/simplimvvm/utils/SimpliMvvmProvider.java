@@ -1,5 +1,7 @@
 package com.trayis.simplimvvm.utils;
 
+import android.content.Context;
+
 import com.trayis.simplimvvm.ui.SimpliBase;
 import com.trayis.simplimvvm.ui.SimpliFragment;
 import com.trayis.simplimvvm.viewmodel.SimpliViewModel;
@@ -22,6 +24,8 @@ import static com.trayis.simplimvvm.ui.SimpliBase.ViewModelProviderFlag.SELF;
 public abstract class SimpliMvvmProvider {
 
     protected SimpliViewModelProvidersFactory factory;
+
+    protected Context context;
 
     public abstract SimpliViewModel[] getViewModels(SimpliBase simpli) throws InvalidPropertiesFormatException;
 

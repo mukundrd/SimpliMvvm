@@ -48,7 +48,7 @@ public abstract class SimpliFragment<B extends ViewDataBinding> extends Fragment
     private SimpliViewModel[] getViewModel() {
         if (mViewModel == null) {
             try {
-                mViewModel = SimpliProviderUtil.getInstance().getProvider().getViewModels(this);
+                mViewModel = SimpliProviderUtil.getProvider().getViewModels(this);
             } catch (InvalidPropertiesFormatException e) {
                 Logging.e(TAG, e.getMessage(), e);
             }

@@ -2,20 +2,19 @@ package com.trayis.simplikmvvm.utils
 
 class SimpliProviderUtil private constructor() {
 
-    var provider: SimpliMvvmProvider? = null
-        set(provider) {
-            if (this.provider != null) {
-                Logging.w(TAG, "provider already set")
-                return
-            }
-            field = provider
-        }
+    private var mProvider: SimpliMvvmProvider? = null
 
     companion object {
 
-        private val TAG = "SimpliProviderUtil"
+        private val INSTANCE = SimpliProviderUtil()
 
-        val instance = SimpliProviderUtil()
+        fun setProvider(provider: SimpliMvvmProvider) {
+            INSTANCE.mProvider = provider
+        }
+
+        fun getProvider(): SimpliMvvmProvider? {
+            return INSTANCE.mProvider
+        }
     }
 
 }
