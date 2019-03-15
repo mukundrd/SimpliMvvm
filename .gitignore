@@ -1,5 +1,10 @@
 *.iml
 .gradle
+.idea
+build
+app/build
+simpliMvvm/build
+simpliMvvmAnnotation/build
 /local.properties
 /.idea/libraries
 /.idea/modules.xml

@@ -1,4 +1,4 @@
-package com.trayis.simplimvvm.app
+package com.trayis.kotlinapp
 
 import org.junit.Test
 
