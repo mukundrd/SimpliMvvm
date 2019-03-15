@@ -1,16 +1,20 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.trayis.simplimvvm.app"
+        applicationId "com.trayis.simplimvvm.kotlinapp"
         minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -33,27 +37,26 @@ android {
     dataBinding {
         enabled = true
     }
-}
 
-task bintray() {
-    println(System.getenv("bintray_apikey"))
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.annotation:annotation:1.0.1'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
 
-    implementation project(":simpliMvvm")
-    implementation project(":simpliMvvmAnnotation")
-    annotationProcessor project(":simpliMvvmAnnotation")
+    implementation project(':simpliMvvm')
+    implementation project(':simpliMvvmAnnotation')
 
-    testImplementation "junit:junit:4.12"
-    testAnnotationProcessor project(":simpliMvvmAnnotation")
+    kapt project(':simpliMvvmAnnotation')
+    annotationProcessor project(':simpliMvvmAnnotation')
 
-    androidTestImplementation "androidx.test:runner:1.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    testImplementation 'junit:junit:4.12'
+    testAnnotationProcessor project (':simpliMvvmAnnotation')
 
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

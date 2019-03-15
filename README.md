@@ -12,7 +12,7 @@ The SimpliMvvm concept simplifies the use of MVVM architecture by,
 
 #### Implementation
 
-By referring to the sample ```KotlinApp``` application, one can understand the implementation way.
+By referring to the sample ```App``` application, one can understand the implementation way.
 
 <br/>
 
@@ -20,18 +20,18 @@ By referring to the sample ```KotlinApp``` application, one can understand the i
 Update application's gradle file with SimpliMvvm dependencies.
 
 ```
-implementation "com.trayis:simpliKMvvm:2.0.0"
-implementation "com.trayis:simpliKMvvmAnnotation:2.0.0"
+implementation "com.trayis:simpliMvvm:2.0.0"
+implementation "com.trayis:simpliMvvmAnnotation:2.0.0"
 
-kapt "com.trayis:simpliKMvvmAnnotation:2.0.0"
-annotationProcessor "com.trayis:simpliKMvvmAnnotation:2.0.0"
+kapt "com.trayis:simpliMvvmAnnotation:2.0.0"
+annotationProcessor "com.trayis:simpliMvvmAnnotation:2.0.0"
 
-testAnnotationProcessor "com.trayis:simpliKMvvmAnnotation:2.0.0"
+testAnnotationProcessor "com.trayis:simpliMvvmAnnotation:2.0.0"
 ```
 
 <br/>
 
-##### 2. Application class will initialise the ```SimpliVmmvProvider``` component
+##### 2. Application class will initialise the ```SimpliMvvmProvider``` component
 You just need to add, ```SimpliProviderUtil.setProvider(SimpliMvvmProviderImpl(this))``` in ```onCreate()``` method of application class.
 
 <br/>
