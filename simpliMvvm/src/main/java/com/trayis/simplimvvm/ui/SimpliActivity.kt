@@ -1,11 +1,11 @@
 package com.trayis.simplimvvm.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.trayis.simplimvvm.ui.SimpliBase.Companion.SELF
-import com.trayis.simplimvvm.utils.Logging
 import com.trayis.simplimvvm.utils.SimpliProviderUtil
 import com.trayis.simplimvvm.viewmodel.SimpliViewModel
 import java.util.*
@@ -43,7 +43,7 @@ abstract class SimpliActivity<B : ViewDataBinding> : AppCompatActivity(), Simpli
             try {
                 viewModels = SimpliProviderUtil.getProvider()?.getViewModels(this)
             } catch (e: InvalidPropertiesFormatException) {
-                Logging.e(TAG, e.message, e)
+                Log.e(TAG, e.message, e)
             }
 
         }

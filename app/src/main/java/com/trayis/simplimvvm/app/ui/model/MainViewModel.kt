@@ -1,11 +1,11 @@
 package com.trayis.simplimvvm.app.ui.model
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import com.trayis.simplimvvm.utils.Logging
-import com.trayis.simplimvvm.viewmodel.SimpliViewModel
 import com.trayis.simplimvvm.app.common.ConnectivityResource
+import com.trayis.simplimvvm.viewmodel.SimpliViewModel
 import java.util.*
 
 class MainViewModel(val conn: ConnectivityResource?) : SimpliViewModel() {
@@ -30,7 +30,7 @@ class MainViewModel(val conn: ConnectivityResource?) : SimpliViewModel() {
                         it.purge()
                         return;
                     }
-                    Logging.i(TAG, "" + mInitialTime);
+                    Log.i(TAG, "" + mInitialTime);
                     textViewData.postValue("" + mInitialTime);
                     mInitialTime--;
                 }
