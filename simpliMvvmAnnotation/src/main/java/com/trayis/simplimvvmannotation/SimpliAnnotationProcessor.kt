@@ -14,8 +14,10 @@ import javax.tools.Diagnostic
 @SupportedAnnotationTypes("com.trayis.simplimvvmannotation.SimpliViewComponent")
 class SimpliAnnotationProcessor : AbstractProcessor() {
 
-    private val kaptKotlinGeneratedOption = "kapt.kotlin.generated"
-    private lateinit var kaptKotlinGenerated: File
+    companion object {
+        const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
+    }
+
     private var initialized = false;
 
     private var messager: Messager? = null
@@ -32,8 +34,7 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
     override fun init(processingEnvironment: ProcessingEnvironment) {
         super.init(processingEnvironment)
         messager = processingEnv.messager
-        messager!!.printMessage(Diagnostic.Kind.NOTE, "Initializing KAPT Simpli Annotation Processor ...")
-        kaptKotlinGenerated = File(processingEnv.options[kaptKotlinGeneratedOption])
+        messager?.printMessage(Diagnostic.Kind.NOTE, "Initializing KAPT Simpli Annotation Processor ...")
     }
 
     override fun getSupportedSourceVersion(): SourceVersion {
@@ -47,15 +48,15 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         val packageBuilder = StringBuilder()
         val classBuilder = StringBuilder()
 
-        packageBuilder.append("package ").append(PACKAGE_NAME)
+        packageBuilder.append("package $PACKAGE_NAME")
 
-        packageBuilder.append("\n\nimport android.content.Context");
+        packageBuilder.append("\n\nimport android.content.Context")
         packageBuilder.append("\n\nimport com.trayis.simplimvvm.utils.SimpliMvvmProvider")
         packageBuilder.append("\nimport com.trayis.simplimvvm.viewmodel.SimpliViewModel")
         packageBuilder.append("\nimport com.trayis.simplimvvm.ui.SimpliBase")
         packageBuilder.append("\n\nimport java.util.InvalidPropertiesFormatException")
 
-        classBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ").append(Date()).append("\n * Do not modify.\n */")
+        classBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ${Date()}\n * Do not modify.\n */")
         classBuilder.append("\nclass SimpliMvvmProviderImpl internal constructor(context : Context) : SimpliMvvmProvider() {")
         classBuilder.append("\n\n\tinit {")
         classBuilder.append("\n\t\tthis.context = context")
@@ -73,14 +74,14 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         classBuilder.append("\n\t\t}")
         classBuilder.append("\n\t}")
 
-        factoryPackageBuilder.append("package ").append(PACKAGE_NAME)
+        factoryPackageBuilder.append("package $PACKAGE_NAME")
 
         factoryPackageBuilder.append("\n\nimport android.content.Context")
         factoryPackageBuilder.append("\n\nimport com.trayis.simplimvvm.utils.SimpliViewModelProvidersFactory")
         factoryPackageBuilder.append("\n\nimport androidx.annotation.NonNull")
         factoryPackageBuilder.append("\nimport androidx.lifecycle.ViewModel")
 
-        factoryClassBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ").append(Date()).append("\n * Do not modify.\n */")
+        factoryClassBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ${Date()}\n * Do not modify.\n */")
         factoryClassBuilder.append("\nclass SimpliViewModelProvidersFactoryImpl(context: Context) : SimpliViewModelProvidersFactory() {")
         factoryClassBuilder.append("\n\n\tinit {")
         factoryClassBuilder.append("\n\t\tthis.context = context")
@@ -105,8 +106,7 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
                 }
                 resourceProvider = it.toString()
             }
-        } catch (e: NoSuchElementException) {
-            // Do nothing
+        } catch (_: NoSuchElementException) {
         }
 
         val providersMap = HashMap<String, MutableMap<String, List<VariableElement>>>()
@@ -140,7 +140,7 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         classBuilder.append("\n\t\tmProviders = arrayOfNulls(${entries.size})")
         for ((i, entry) in entries.withIndex()) {
             createSimpliMvvmProvider(entry, resourceProvider)
-            classBuilder.append("\n\t\tmProviders[").append(i).append("] = ").append(entry.key).append(".PackageMvvmProvider.getInstance(factory!!)")
+            classBuilder.append("\n\t\tmProviders[$i] = ${entry.key}.PackageMvvmProvider.getInstance(factory!!)")
         }
         classBuilder.append("\n\t}")
 
@@ -155,16 +155,18 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         classBuilder.append("\n\t\t\t}")
         classBuilder.append("\n\t\t}")
 
-        classBuilder.append("\n\n\t\treturn viewModels;\n\n\t}\n\n}\n") // close class
+        classBuilder.append("\n\n\t\treturn viewModels\n\n\t}\n\n}\n") // close class
 
-        factoryClassBuilder.append("\n\t\t}");
-        factoryClassBuilder.append("\n\t\tthrow IllegalStateException(String.format(\"Cannot find mapping for %s class\", modelClass.getName()));");
-        factoryClassBuilder.append("\n\t}"); // close class
-        factoryMethodsBuilder.append("\n\n}\n");
+        factoryClassBuilder.append("\n\t\t}")
+        factoryClassBuilder.append("\n\t\tthrow IllegalStateException(String.format(\"Cannot find mapping for %s class\", modelClass.getName()))")
+        factoryClassBuilder.append("\n\t}") // close class
+        factoryMethodsBuilder.append("\n\n}\n")
 
         try {
             var source = packageBuilder.toString() + classBuilder.toString()
             var relativePath = PACKAGE_NAME.replace('.', File.separatorChar)
+
+            val kaptKotlinGenerated = File(processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME])
             var folder = File(kaptKotlinGenerated, relativePath).apply { mkdirs() }
             var file = File(folder, "SimpliMvvmProviderImpl.kt")
             file.writeText(source)
@@ -189,17 +191,17 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         val methodsBuilder = StringBuilder()
 
         val packageName = entry.key
-        packageBuilder.append("package ").append(packageName)
+        packageBuilder.append("package $packageName")
 
-        packageBuilder.append("\n\nimport android.content.Context");
+        packageBuilder.append("\n\nimport android.content.Context")
         packageBuilder.append("\n\nimport com.trayis.simplimvvm.utils.SimpliMvvmProvider")
-        packageBuilder.append("\nimport com.trayis.simplimvvm.utils.SimpliViewModelProvidersFactory;")
+        packageBuilder.append("\nimport com.trayis.simplimvvm.utils.SimpliViewModelProvidersFactory")
         packageBuilder.append("\nimport com.trayis.simplimvvm.viewmodel.SimpliViewModel")
         packageBuilder.append("\nimport com.trayis.simplimvvm.ui.SimpliBase")
         packageBuilder.append("\n\nimport java.util.InvalidPropertiesFormatException")
-        packageBuilder.append("\n\nimport java.util.ArrayList;")
+        packageBuilder.append("\n\nimport java.util.ArrayList")
 
-        classBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ").append(Date()).append("\n * Do not modify.\n */")
+        classBuilder.append("\n\n/**\n * This is a generated class\n * Generated on ${Date()}\n * Do not modify .\n */")
         classBuilder.append("\nclass PackageMvvmProvider internal constructor() : SimpliMvvmProvider() {")
 
         classBuilder.append("\n\n\tcompanion object {")
@@ -219,15 +221,14 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
         value.entries.forEach { listEntry ->
 
             val fcName = listEntry.key
-            classBuilder.append("\n\n\t\tif (simpli is ").append(fcName).append(") {")
+            classBuilder.append("\n\n\t\tif (simpli is $fcName) {")
             val viewModelMethodName = "prepareViewModelsFor" + fcName.substring(fcName.lastIndexOf(".") + 1)
-            classBuilder.append("\n\t\t\treturn ").append(viewModelMethodName).append("(context, simpli);")
+            classBuilder.append("\n\t\t\treturn $viewModelMethodName(context, simpli)")
 
             val list = listEntry.value.filter { it.getKind() == ElementKind.FIELD && it.getAnnotation(SimpliInject::class.java) != null }
-            // classBuilder.append("\n\t\t\tviewModels = arrayOfNulls(${list.size})")
 
-            methodsBuilder.append("\n\n\tprivate fun ").append(viewModelMethodName).append("(context: Context?, simpli: SimpliBase): Array<SimpliViewModel?>? {");
-            methodsBuilder.append("\n\t\tval viewModels = arrayOfNulls<SimpliViewModel?>(").append(list.size).append(")")
+            methodsBuilder.append("\n\n\tprivate fun $viewModelMethodName(context: Context?, simpli: SimpliBase): Array<SimpliViewModel?>? {")
+            methodsBuilder.append("\n\t\tval viewModels = arrayOfNulls<SimpliViewModel?>(${list.size})")
 
             var i = 0
             list.forEach { variable ->
@@ -243,16 +244,16 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
                         if (cons.kind === ElementKind.CONSTRUCTOR) {
                             val constructorParamTypeMirrors = (cons.asType() as ExecutableType).parameterTypes
                             if (!includedInFactoryClassBuilder) {
-                                factoryClassBuilder.append("\n\t\t\t\"").append(viewModelName).append("\"->")
+                                factoryClassBuilder.append("\n\t\t\t\"$viewModelName\"->")
                             }
                             if (constructorParamTypeMirrors == null || constructorParamTypeMirrors.isEmpty()) {
                                 if (!includedInFactoryClassBuilder) {
-                                    factoryClassBuilder.append("\n\t\t\t\t\treturn ").append(viewModelName).append("() as T")
+                                    factoryClassBuilder.append("\n\t\t\t\t\treturn $viewModelName() as T")
                                 }
-                                methodsBuilder.append("\n\t\t(").append("simpli as ${fcName}).").append(variable.toString()).append(" = getViewModelProviderFor(simpli)?.get(").append(viewModelName).append("::class.java)")
+                                methodsBuilder.append("\n\t\t(simpli as ${fcName}).${variable} = getViewModelProviderFor(simpli)?.get($viewModelName::class.java)")
                             } else {
                                 if (!includedInFactoryClassBuilder) {
-                                    factoryClassBuilder.append("\n\t\t\t\treturn ").append(viewModelName).append("(\n\t\t\t\t\t")
+                                    factoryClassBuilder.append("\n\t\t\t\treturn $viewModelName(\n\t\t\t\t\t")
                                 }
                                 var comma = false
                                 for (constructorParam in constructorParamTypeMirrors) {
@@ -266,18 +267,18 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
                                             factoryClassBuilder.append(", ")
                                         }
                                         comma = true
-                                        factoryClassBuilder.append("prepare").append(resourceName).append("(context!!)")
+                                        factoryClassBuilder.append("prepare$resourceName(context!!)")
                                     }
 
                                     if (!methods.contains(resourceName)) {
                                         methods.add(resourceName)
-                                        factoryPackageBuilder.append("\nimport ").append(resourceTypeMirror)
-                                        factoryMethodsBuilder.append("\n\n\tprivate fun prepare").append(resourceName).append("(context: Context): ${resourceName} {")
+                                        factoryPackageBuilder.append("\nimport $resourceTypeMirror")
+                                        factoryMethodsBuilder.append("\n\n\tprivate fun prepare$resourceName(context: Context): ${resourceName} {")
                                         resourceProvider?.let {
-                                            factoryMethodsBuilder.append("\n\t\t return ${resourceProvider}.getInstance().prepare${resourceName}(context);")
+                                            factoryMethodsBuilder.append("\n\t\t return ${resourceProvider}.getInstance().prepare${resourceName}(context)")
                                         } ?: kotlin.run {
                                             factoryMethodsBuilder.append("\n\t\treturn getResource(${resourceName}::class.java)?.let { it as ${resourceName} }?: run {")
-                                            factoryMethodsBuilder.append("\n\t\t\tval resource = ").append(resourceName).append(".getInstance(context)")
+                                            factoryMethodsBuilder.append("\n\t\t\tval resource = $resourceName.getInstance(context)")
                                             factoryMethodsBuilder.append("\n\t\t\tputResource(resource)")
                                             factoryMethodsBuilder.append("\n\t\t\treturn resource")
                                             factoryMethodsBuilder.append("\n\t\t}")
@@ -288,23 +289,23 @@ class SimpliAnnotationProcessor : AbstractProcessor() {
                                 if (!includedInFactoryClassBuilder) {
                                     factoryClassBuilder.append(") as T")
                                 }
-                                methodsBuilder.append("\n\t\t(").append("simpli as ${fcName}).").append(variable.toString()).append(" = getViewModelProviderFor(simpli)?.get(").append(viewModelName).append("::class.java)")
+                                methodsBuilder.append("\n\t\t(").append("simpli as ${fcName}).${variable} = getViewModelProviderFor(simpli)?.get($viewModelName::class.java)")
                             }
                         }
                     }
-                    methodsBuilder.append("\n\t\tviewModels[").append(i++).append("] = ").append("simpli.").append(variable.toString())
+                    methodsBuilder.append("\n\t\tviewModels[${i++}] = simpli.$variable")
                 }
             }
-            methodsBuilder.append("\n\t\treturn viewModels\n\t}");
+            methodsBuilder.append("\n\t\treturn viewModels\n\t}")
             classBuilder.append("\n\t\t}")
         }
-        classBuilder.append("\n\n\t\treturn null\n\t}");
-        methodsBuilder.append("\n\n}\n");
+        classBuilder.append("\n\n\t\treturn null\n\t}")
+        methodsBuilder.append("\n\n}\n")
 
         try {
             val source = packageBuilder.toString() + classBuilder.toString() + methodsBuilder.toString()
             val relativePath = packageName.replace('.', File.separatorChar)
-            val folder = File(kaptKotlinGenerated, relativePath).apply { mkdirs() }
+            val folder = File(File(processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]), relativePath).apply { mkdirs() }
             val file = File(folder, "PackageMvvmProvider.kt")
             file.writeText(source)
         } catch (e: Throwable) {

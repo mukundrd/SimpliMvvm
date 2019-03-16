@@ -7,8 +7,8 @@ apply plugin: 'kotlin-kapt'
 def siteUrl = 'https://gitlab.com/trayis/android/SimpiMVVM'      // Homepage URL of the library
 def gitUrl = 'https://gitlab.com/trayis/android/SimpiMVVM.git'   // Git repository URL
 
-group = userGroup    // Maven Group ID for the artifact
-version = "2.1.0"    // This is the library version used when deploying the artifact
+group = "com.trayis" // Maven Group ID for the artifact
+version = "2.1.1"    // This is the library version used when deploying the artifact
 
 android {
     compileSdkVersion 28
@@ -80,9 +80,9 @@ install {
             }
             developers {
                 developer {
-                    id userId
-                    name userName
-                    email userEmail
+                    id "muks.dev"
+                    name "Mukund Desai"
+                    email "muks.dev@trayis.com"
                 }
             }
             scm {
@@ -115,15 +115,20 @@ artifacts {
 }
 
 bintray {
-    user = System.getenv("bintray_user")
-    key = System.getenv("bintray_apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "android_lib"
-        name = "SimpliMvvm"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
+    def file = new File('local.properties')
+    if (file.exists()) {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
+        configurations = ['archives']
+        pkg {
+            repo = "android_lib"
+            name = "SimpliMvvm"
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = ["Apache-2.0"]
+            publish = true
+        }
     }
 }
